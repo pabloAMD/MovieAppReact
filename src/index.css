@@ -56,6 +56,18 @@ h1{
   min-width: 50px;
 }
 
+
+input:invalid {
+  border: 2px solid  #0e226f;
+}
+
+
+
+
+
+
+
+
 /* body {
   background-color: #ffffff;
   padding: 0px 60px 0px 60px;

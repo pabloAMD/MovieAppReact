@@ -1,28 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavBar } from '../components/NavBar'
 import { useParams } from 'react-router-dom'
-import { useGetByid, useGetSilimarMovies } from '../hooks/useFetchApi';
+
 import { Loading } from '../components/Loading';
 import { Rating } from '../components/Rating';
 import { SimilarMovies } from '../components/SimilarMovies';
+
+import { searchMovieApi } from '../controller/searchMovie';
+import { getById } from '../controller/getById';
 
 export const MovieDetail = () => {
 
     const { id } = useParams();
 
-    const { movieById, isLoading, title } = useGetByid(id);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [movieById, setMovieById] = useState(0);
+
+    const [similarMovies, setsimilarMovies] = useState([]);
+
+    useEffect(() => {
+
+        getById(id).then((data) => {
+            setMovieById(data);
+        });
+
+        searchMovieApi(movieById.Title).then((data) => {
+            const moviesS = data.slice(0, 3);
+            setsimilarMovies(moviesS);
+            setIsLoading(false);
+        });
 
 
-    const { similarMovie } = useGetSilimarMovies(title);
-
-   
-
-    
-
-    
 
 
 
+    }, [isLoading])
 
 
 
@@ -114,8 +127,8 @@ export const MovieDetail = () => {
 
             <div className='py-5 mx-16'>
                 <h1>Similares</h1>
-                
-                <SimilarMovies movies= {similarMovie} />
+
+                <SimilarMovies movies={similarMovies} />
             </div>
         </>
     )

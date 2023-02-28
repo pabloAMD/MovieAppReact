@@ -4,6 +4,7 @@ import { MoviesGrid } from '../components/MoviesGrid';
 
 
 import { useFetchApi, useSearchApi } from '../hooks/useFetchApi';
+import { NavBarPrivate } from '../../private/components/NavBarPrivate';
 
 
 export const Home = () => {
@@ -12,17 +13,40 @@ export const Home = () => {
 
     const { movies, setMovies } = useFetchApi();
 
+    const [categories, setCategories] = useState([]);
+
+    const user = localStorage.getItem("user");
+    console.log(user);
+
+   
+
+    const getCategoriesNames = () => {
+
+        const totalCategories = movies.map((movie) => {
+            return movie.Genre.split(",");
+        });
+
+        const uniqueCategories = [...new Set(totalCategories.flat())];
+        setCategories(uniqueCategories);
+
+
+    }
+
     const searchMovie = (event) => {
+        
         setcondition(`Results of search "${event}"`);
         useSearchApi(event).then((data) => {
             setMovies(data);
-            
+
         });
     }
 
     const handleSelect = (event) => {
 
+
         const valueT = event.target.text.toUpperCase();
+
+
 
         setcondition(`Order by "${valueT}"`);
 
@@ -30,18 +54,21 @@ export const Home = () => {
             const order = movies.sort((a, b) => {
                 if (a.Title < b.Title) { return -1; }
                 if (a.Title > b.Title) { return 1; }
-
             });
-           
-
             setMovies(order);
+            
+        }
 
+        if (valueT === "GENERE") {
+            getCategoriesNames();
         }
     }
     return (
         <>
-
-            <NavBar onsearchMovie={event => searchMovie(event)} />
+            {
+                user ? <NavBarPrivate onsearchMovie={event => searchMovie(event)} /> : <NavBar onsearchMovie={event => searchMovie(event)} /> 
+            }
+            
 
             <div className='flex  mx-16'>
                 <h3>{condition}</h3>
@@ -49,9 +76,9 @@ export const Home = () => {
                 <div id="dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                         <li onClick={handleSelect} data-id="1">
-                            <a value={"hola"} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Title</a>
+                            <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Title</a>
                         </li>
-                        <li  >
+                        <li  onClick={handleSelect}  >
                             <a className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Genere</a>
                         </li>
 
@@ -59,21 +86,8 @@ export const Home = () => {
                 </div>
             </div>
 
+           <MoviesGrid movie={movies}  categories ={categories}/>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <MoviesGrid movie={movies} />
 
 
 

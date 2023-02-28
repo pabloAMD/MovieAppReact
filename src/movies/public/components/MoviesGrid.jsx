@@ -1,7 +1,9 @@
 import { MovieItem } from "./MovieItem";
 
-export const MoviesGrid = ({ movie  }) => {
+export const MoviesGrid = ({ movie }) => {
   return ( 
+
+   
     <div className="card-grid">
     {
       movie.map(movie => (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getById } from "../controller/getById";
 import { getMovies } from "../controller/getMovies";
+import { getUser } from "../controller/getUser";
 import { searchMovieApi } from "../controller/searchMovie";
 
 
@@ -36,52 +37,41 @@ export const useGetByid = (id) => {
     const [movieById, setMovieById] = useState([]);
     const [isLoading, setisLoading] = useState(true);
 
-    const moviesGetByid = async () => {
-        const resp = await getById(id);
+     getById(id).then((resp) => {
         setMovieById(resp);
         setisLoading(false);
-    };
-
-    useEffect(() => {
-        moviesGetByid();
-    }, []);
-
-
-    return {
-        movieById,
-        isLoading,
-        title: movieById.Title,
-    };
-
-}
-
-export const useGetSilimarMovies= (movieD) => {
-    
-    
-
-    const [similarMovie, setsimilarMovie] = useState([]);
-    
-    
-
-    const similarMoviesGet = async () => {
+     });
         
-        const resp = await searchMovieApi(movieD);
-        const arr= new Set(resp)
-        const result = [...arr];
-        setsimilarMovie(result);
-       
-   
-    };
 
-    useEffect(() => {
-        similarMoviesGet();
-    }, []);
-
-
-    return {
-        similarMovie:similarMovie.slice(0, 5),
-    };
+    return {movieById, isLoading};
 
 }
+
+export const useGetSilimarMovies = (movieD) => {
+
+
+
+    const [similarMovies, setSimilarMovies] = useState([]);
+
+    searchMovieApi(movieD).then((movies) => {  
+        
+        setSimilarMovies(movies);
+    });
+
+    console.log(similarMovies)
+
+    return similarMovies;
+}
+
+export const verifyUser = async (email, password) => {
+
+        const user = await getUser(email, password);
+
+        return user;
+
+
+
+}
+
 
 
