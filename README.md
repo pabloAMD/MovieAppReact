@@ -24,7 +24,7 @@ Descargue este repositorio y abralo con su editor de código
 Cree un archivo en la raiz de su proyecto .env.local donde pondra la variable que contiene la dirección del backend una vez ejecutada localmente:
 
 ```
-VITE_URL_API: localhos:http://localhost:3000/api/movies
+VITE_URL_API:http://localhost:3000/api/movies
 
 ```
 ## Cuarto paso 
