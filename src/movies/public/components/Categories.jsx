@@ -12,7 +12,7 @@ export const Categories = ({ categories }) => {
    const [categoryName, setCategoryName] = useState(categories[0])
 
    const { moviesCategories, isLoading } = useSelector(state => state.categoriesMovies);//
-   console.log(moviesCategories)
+  
 
    useEffect(() => {
 

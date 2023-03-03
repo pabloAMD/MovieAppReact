@@ -34,8 +34,7 @@ export const NavBarPrivate = ({ onsearchMovie }) => {
     }
 
     const onOpenNavBar = () => {
-        console.log("entra")
-            
+          
             const navbar = document.getElementById("navbar-sticky");
             navbar.classList.toggle("hidden");    
            

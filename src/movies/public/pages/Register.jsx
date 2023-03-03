@@ -1,12 +1,14 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/context/AuthContext";
 import { createNewUser } from "../../hooks/useFetchApi";
 import { Toas } from "../components/Toas";
 
 export const Register = () => {
 
     const [error, seterror] = useState("");
+    const {login} = useContext(AuthContext);
 
      const navigate = useNavigate();
 
@@ -21,8 +23,7 @@ export const Register = () => {
         }
 
         createNewUser(body).then((data) => {
-
-            localStorage.setItem("user", JSON.stringify(data.user.name));
+            login(data.user.name);
               navigate("/");
 
         }).catch(() => {
