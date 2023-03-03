@@ -7,6 +7,7 @@ export const MoviesGrid = ({ movie }) => {
     <div className="card-grid">
     {
       movie.map(movie => (
+        
         <MovieItem key={movie.id} movie = { movie} />
       ))
     }

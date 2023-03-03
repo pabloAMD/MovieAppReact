@@ -1,53 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { NavBar } from '../components/NavBar'
-import { useParams } from 'react-router-dom'
+import React from 'react'
+import { Rating } from './Rating'
 
-import { Loading } from '../components/Loading';
-import { Rating } from '../components/Rating';
-import { SimilarMovies } from '../components/SimilarMovies';
-
-import { searchMovieApi } from '../controller/searchMovie';
-import { getById } from '../controller/getById';
-
-export const MovieDetail = () => {
-
-    const { id } = useParams();
-
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [movieById, setMovieById] = useState(0);
-
-    const [similarMovies, setsimilarMovies] = useState([]);
-
-    useEffect(() => {
-
-        getById(id).then((data) => {
-            setMovieById(data);
-        });
-
-        searchMovieApi(movieById.Title).then((data) => {
-            const moviesS = data.slice(0, 3);
-            setsimilarMovies(moviesS);
-            setIsLoading(false);
-        });
-
-
-
-
-
-    }, [isLoading])
-
-
-
-    return (
-        <>
-            <NavBar />
-
-            {
-                isLoading && (<Loading />)
-            }
-
-            <div className='pt-6 pb-20 mx-16'>
+export const MovieDetail = ({movieById}) => {
+  return (
+    <>
+    <div className='pt-6 pb-20 mx-16'>
 
                 <nav className="flex" aria-label="Breadcrumb">
                     <ol className="inline-flex  space-x-1 md:space-x-3">
@@ -75,7 +32,7 @@ export const MovieDetail = () => {
 
 
                 <div className='mx-12 border-collapse '>
-                    <img className='object-left' src={movieById.Poster} alt="" />
+                    <img className='object-left max-w-xs' src={movieById.Poster} alt="" />
                 </div>
 
                 <div className='max-w-screen-md	 mx-20 '>
@@ -88,13 +45,11 @@ export const MovieDetail = () => {
 
                         <div>
 
-
                             <p className=''><b>Genere: </b>{movieById.Genre}</p>
                             <p className='pt-2'><b>Director: </b>{movieById.Director}</p>
                             <p className='pt-2'><b>Actors: </b>{movieById.Actors}</p>
 
                         </div>
-
                         <div>
                             <p className='pt-2'><b>Country: </b>{movieById.Country}</p>
 
@@ -106,30 +61,15 @@ export const MovieDetail = () => {
 
                     <p className='pt-2'><b>Ratings : </b></p>
 
-                    {!isLoading && (
+                    {movieById && (
                         <Rating rating={movieById.Ratings} />
 
 
                     )}
 
                     <p className='pt-7'><b>Awards : </b>{movieById.Awards}</p>
-
-
-
-
-
                 </div>
-
-
-
-
             </div>
-
-            <div className='py-5 mx-16'>
-                <h1>Similares</h1>
-
-                <SimilarMovies movies={similarMovies} />
-            </div>
-        </>
-    )
+    </>
+  )
 }

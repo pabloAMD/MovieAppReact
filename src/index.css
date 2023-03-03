@@ -3,22 +3,24 @@
 @tailwind utilities;
 
 
-*{
+* {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} 
+}
 
-h2{
+
+
+h2 {
   font-size: 2rem;
   font-weight: 500;
   color: #0e226f;
   margin-bottom: 20px;
 }
 
-h1{
+h1 {
   font-size: 2.5rem;
   font-weight: 500;
   color: #0e226f;
@@ -26,6 +28,7 @@ h1{
 }
 
 .card-grid {
+  overflow-x: auto;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -34,12 +37,14 @@ h1{
 }
 
 .card-gridSimilars {
- 
+
   display: flex;
-  
+  justify-content: center;
+
   flex-wrap: wrap;
-  
+
 }
+
 .error-page {
   display: flex;
   flex-direction: column;
@@ -48,18 +53,59 @@ h1{
   width: 100%;
 }
 
-.movieDetail{
+.movieDetail {
   max-width: 90%;
 }
 
-.movieDetail img{
+.movieDetail img {
   min-width: 50px;
 }
 
 
 input:invalid {
-  border: 2px solid  #0e226f;
+  border: 2px solid #0e226f;
 }
+
+.disabledB:disabled,
+button[disabled] {
+  background-color: #cccccc;
+  color: white;
+}
+
+.disabledB:disabled,
+button[disabled]:hover {
+
+  background-color: #cccccc;
+  color: white;
+
+}
+
+.spectrum-background {
+  background:
+    linear-gradient(rgb(29, 2, 39), transparent),
+    linear-gradient(to top left, rgb(49, 0, 228), transparent),
+    linear-gradient(to top right, rgb(4, 4, 49), transparent);
+  background-blend-mode: screen;
+}
+
+.colorHFooter {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #29beff;
+}
+
+.About{
+  
+  width: 100%;
+  background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("https://wallpaperaccess.com/full/3658597.jpg");
+  opacity: 0.8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+
 
 
 

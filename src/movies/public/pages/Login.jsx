@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { NavBar } from '../components/NavBar';
+
 import { Toas } from '../components/Toas';
-import { useSearchApi, verifyUser } from '../hooks/useFetchApi';
+import {  verifyUser } from '../../hooks/useFetchApi';
+import { AuthContext } from '../../auth/context/AuthContext';
 
 export const Login = () => {
 
-    const [user, setuser] = useState();
+    const {login} = useContext(AuthContext);
+
 
     const [error, seterror] = useState("")
 
@@ -17,20 +19,17 @@ export const Login = () => {
         e.preventDefault();
 
         verifyUser(e.target.email.value, e.target.password.value).then((data) => {
-
             
-
             if (data.status === "ok") {
-                setuser(data)
-                console.log(data);
-                localStorage.setItem("user", JSON.stringify(data.name));
+                login(data.name);
+                
                 navigate("/");
             }
 
         }).then(() => {
 
             seterror("Revise sus datos");
-            console.log(error);
+            
 
         });
 
@@ -70,7 +69,7 @@ export const Login = () => {
 
                 <div className='text-center'>
                     <p className='py-5'>Don't have account?</p>
-                    <a href='/register' className="no-underline hover:underline  text-red-500">Registeddddr</a>
+                    <a href='/register' className="no-underline hover:underline  text-red-500">Register Now</a>
                 </div>
 
                 
